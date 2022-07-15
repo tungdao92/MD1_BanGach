@@ -27,8 +27,8 @@ let bricks = {
     totalRow: 5,
     totalCol: 6
 }               //gạch
-
-
+let audio = new Audio('audio/audio.mp3')
+let audio1 = new Audio('audio/bom.mp3')
 let gameOver = true;
 let GameWin = true;
 let Point = 0;
@@ -44,6 +44,9 @@ for (let i = 0; i < bricks.totalRow; i++) {
             isBreak: true
         })
     }
+}
+function stop() {
+    audio.pause()
 }
 
 function drawPaddle() {
@@ -105,7 +108,7 @@ window.addEventListener('keydown', move);
 window.addEventListener('mousemove', move)
 
 
-function vaChamThanhCanvas() {
+function vaChamKhungCanvas() {
     if (ball.x < ball.radius || ball.x + ball.radius > canvas.width) {
         ball.dx = -ball.dx;
     }
@@ -130,6 +133,7 @@ function vaChamGach() {
             if (ball.x >= a.x && ball.x <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
                 ball.y - ball.radius <= a.y + bricks.height) {
                 ball.dy = -ball.dy;
+                audio1.play()
                 a.isBreak = false;
                 Point += 1;
                 if (Point === MaxPoint) {
@@ -159,7 +163,8 @@ function start() {
 }
 
 function gameOver1() {
-    ctx.beginPath()
+    audio.pause();
+    ctx.beginPath();
     ctx.fillStyle = 'black'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'white'
@@ -169,6 +174,7 @@ function gameOver1() {
 }
 
 function youWin() {
+    audio.pause();
     ctx.beginPath()
     ctx.fillStyle = 'Green'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -180,15 +186,17 @@ function youWin() {
 
 function draw() {
     if (gameOver) {
+        audio.play()
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBall();
         drawPaddle();
         drawBricks()
-        vaChamThanhCanvas();
+        vaChamKhungCanvas();
         updateBall();
         vaChamThanhNgang();
         vaChamGach();
         requestAnimationFrame(draw);
+
     } else {
         if (GameWin) {
             gameOver1();
