@@ -13,8 +13,8 @@ let paddle = {
     width: 100,
     height: 15,
     x: 215,
-    y: canvas.height - 15,
-    speed: 60
+    y: canvas.height - 17,
+    speed: 40
 }           //khai báo kích thước tọa độ của paddle.
 
 
@@ -27,8 +27,8 @@ let bricks = {
     totalRow: 5,
     totalCol: 6
 }               //gạch
-let audio = new Audio('audio/audio.mp3')
-let bom = new Audio('audio/bom.mp3')
+let audio = new Audio('audio/funny.mp3')
+let bom = new Audio('audio/hihi.mp3')
 let over = new Audio('audio/over.mp3')
 let winner = new Audio('audio/winner.mp3')
 
@@ -80,6 +80,12 @@ function drawBricks() {
     })
 }
 
+function updateBall() {
+    ball.x -= ball.dx;
+    // console.log('dx', dx)
+    ball.y -= ball.dy;
+    // console.log('dy',dy)
+}
 
 function move(evt) {
     if (evt.keyCode === 39) {
@@ -99,16 +105,7 @@ function move(evt) {
         console.log('tọa độ Right', paddle.x)
     }
 }
-
-function updateBall() {
-    ball.x -= ball.dx;
-    // console.log('dx', dx)
-    ball.y -= ball.dy;
-    // console.log('dy',dy)
-}
-
 window.addEventListener('keydown', move);
-window.addEventListener('mousemove', move)
 
 
 function vaChamKhungCanvas() {
@@ -125,7 +122,7 @@ function vaChamKhungCanvas() {
 }
 
 function vaChamThanhNgang() {
-    if (ball.x + ball.radius > paddle.x && ball.x + ball.radius < paddle.x + paddle.width && ball.y + ball.radius > canvas.height - paddle.height) {
+    if (ball.x + ball.radius >= paddle.x && ball.x + ball.radius <= paddle.x + paddle.width && ball.y + ball.radius >= canvas.height - paddle.height) {
         ball.dy = -ball.dy
     }
 }
