@@ -28,7 +28,10 @@ let bricks = {
     totalCol: 6
 }               //gạch
 let audio = new Audio('audio/audio.mp3')
-let audio1 = new Audio('audio/bom.mp3')
+let bom = new Audio('audio/bom.mp3')
+let over = new Audio('audio/over.mp3')
+let winner = new Audio('audio/winner.mp3')
+
 let gameOver = true;
 let GameWin = true;
 let Point = 0;
@@ -44,22 +47,22 @@ for (let i = 0; i < bricks.totalRow; i++) {
             isBreak: true
         })
     }
-}
-function stop() {
-    audio.pause()
-}
+}        // vẽ mảng gạch
+
 
 function drawPaddle() {
+    ctx.beginPath()
+    ctx.fillStyle = '#fd001e';
     ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height)
-    ctx.fillStyle = 'blue';
     ctx.fill()
+
 
 }
 
 function drawBall() {
     ctx.beginPath();
+    ctx.fillStyle = '#ffffff'
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = 'blue'
     ctx.fill()
     ctx.closePath()
 }
@@ -69,7 +72,7 @@ function drawBricks() {
     bricksArray.forEach(function (a) {
         if (a.isBreak) {
             ctx.beginPath()
-            ctx.fillStyle = 'orange'
+            ctx.fillStyle = '#ff0202'
             ctx.fillRect(a.x, a.y, bricks.width, bricks.height)
             ctx.fill();
             ctx.closePath();
@@ -87,7 +90,7 @@ function move(evt) {
         paddle.x -= paddle.speed;
         console.log('x-', paddle.x)
     }
-    if (paddle.x < 0) {
+    if (paddle.x < 0) {          // Chặn 2 cạnh di chuyển của thanh ngang
         paddle.x = 0
         console.log('tọa độ Left x', paddle.x)
     }
@@ -133,10 +136,13 @@ function vaChamGach() {
             if (ball.x >= a.x && ball.x <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
                 ball.y - ball.radius <= a.y + bricks.height) {
                 ball.dy = -ball.dy;
-                audio1.play()
+                bom.play()
                 a.isBreak = false;
                 Point += 1;
+                console.log('diem======>', Point)
+                document.getElementById('point').innerHTML = Point
                 if (Point === MaxPoint) {
+                    document.getElementById('point').innerHTML = 'You Win!!'
                     gameOver = false;
                     GameWin = false;
                 }
@@ -164,25 +170,31 @@ function start() {
 
 function gameOver1() {
     audio.pause();
-    ctx.beginPath();
-    ctx.fillStyle = 'black'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = 'white'
-    ctx.font = "50px Blazed";
-    ctx.fillText('Game Over!', canvas.width / 15, canvas.height / 4);
+    over.play()
+    let img = document.getElementById('loser');
+    ctx.drawImage(img,0,0)
+    // ctx.beginPath();
+    // ctx.fillStyle = 'black'
+    // ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // ctx.fillStyle = 'white'
+    // ctx.font = "50px Blazed";
+    // ctx.fillText('Game Over!', canvas.width / 15, canvas.height / 4);
+    // ctx.closePath();
 
 }
 
 function youWin() {
+    winner.play()
     audio.pause();
-    ctx.beginPath()
-    ctx.fillStyle = 'Green'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = 'white'
-    ctx.font = "80px Arial";
-    ctx.fillText("YOU WIN!!", canvas.width / 15, canvas.height / 4);
+    let img1 = document.getElementById('winner');
+    ctx.drawImage(img1,0,0)
+    // ctx.beginPath()
+    // ctx.fillStyle = 'Green'
+    // ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // ctx.fillStyle = 'white'
+    // ctx.font = "80px Arial";
+    // ctx.fillText("YOU WIN!!", canvas.width / 15, canvas.height / 4);
 }
-
 
 function draw() {
     if (gameOver) {
@@ -206,7 +218,6 @@ function draw() {
     }
 
 }
-
 
 if (begin) {
     start();
