@@ -20,10 +20,10 @@ let paddle = {
 
 let bricks = {
     offsetX: 25,
-    offsetY: 20,
+    offsetY: 40,
     margin: 25,
     width: 55,
-    height: 15,
+    height: 7,
     totalRow: 5,
     totalCol: 6
 }               //gạch
@@ -61,7 +61,7 @@ function drawPaddle() {
 
 function drawBall() {
     ctx.beginPath();
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = '#faf7fa'
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill()
     ctx.closePath()
@@ -72,7 +72,7 @@ function drawBricks() {
     bricksArray.forEach(function (a) {
         if (a.isBreak) {
             ctx.beginPath()
-            ctx.fillStyle = '#ff0202'
+            ctx.fillStyle = '#ff6b02'
             ctx.fillRect(a.x, a.y, bricks.width, bricks.height)
             ctx.fill();
             ctx.closePath();
@@ -108,6 +108,8 @@ function move(evt) {
 window.addEventListener('keydown', move);
 
 
+
+
 function vaChamKhungCanvas() {
     if (ball.x < ball.radius || ball.x + ball.radius > canvas.width) {
         ball.dx = -ball.dx;
@@ -133,13 +135,13 @@ function vaChamGach() {
             if (ball.x >= a.x && ball.x <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
                 ball.y - ball.radius <= a.y + bricks.height) {
                 ball.dy = -ball.dy;
-                bom.play()
                 a.isBreak = false;
                 Point += 1;
+                bom.play()
                 console.log('diem======>', Point)
-                document.getElementById('point').innerHTML = Point
+                // document.getElementById('point').innerHTML = Point
                 if (Point === MaxPoint) {
-                    document.getElementById('point').innerHTML = 'You Win!!'
+                    // document.getElementById('point').innerHTML = 'You Win!!'
                     gameOver = false;
                     GameWin = false;
                 }
@@ -161,7 +163,7 @@ function start() {
     ctx.beginPath()
     ctx.font = "50px Arial";
     ctx.fillStyle = 'white';
-    ctx.fillText("Click here to start!", canvas.width / 10, canvas.height / 4);
+    ctx.fillText("Click here to start!", canvas.width / 10, 150);
     ctx.closePath();
 }
 
@@ -193,7 +195,28 @@ function youWin() {
     // ctx.fillText("YOU WIN!!", canvas.width / 15, canvas.height / 4);
 }
 
-function draw() {
+function point() {
+    if (Point === MaxPoint){
+        ctx.fillStyle = 'white'
+        ctx.font = '25px Arial'
+        ctx.fillText('YOU WIN ',10,20)
+    } else {
+        ctx.fillStyle = 'white'
+        ctx.font = '15px Arial'
+        ctx.fillText('Point: ',10,20)
+        ctx.beginPath()
+        ctx.fillStyle = 'orange'
+        ctx.font = '20px Arial'
+        ctx.fillText(Point,55,22)
+    }
+
+}
+
+function reLoad() {
+    window.location.reload();
+}
+
+function main() {
     if (gameOver) {
         audio.play()
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -204,7 +227,8 @@ function draw() {
         updateBall();
         vaChamThanhNgang();
         vaChamGach();
-        requestAnimationFrame(draw);
+        point();
+        requestAnimationFrame(main);
 
     } else {
         if (GameWin) {
@@ -220,5 +244,5 @@ if (begin) {
     start();
     begin = !begin;
 } else {
-    draw();
+    main();
 }
