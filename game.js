@@ -2,7 +2,7 @@ let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext('2d');
 let ball = {
     x: Math.floor(Math.random() * 200) + 100,
-    y: Math.floor(Math.random() * 200) + 350,
+    y: Math.floor(Math.random() * 100) + 200,
     dx: 5,
     dy: 4,
     radius: 8
@@ -12,9 +12,9 @@ let ball = {
 let paddle = {
     width: 100,
     height: 15,
-    x: 215,
-    y: canvas.height - 17,
-    speed: 40
+    x: Math.floor(Math.random() * 500),
+    y: Math.floor(Math.random()*385)+300,
+    speed: 60
 }           //khai báo kích thước tọa độ của paddle.
 
 
@@ -27,7 +27,7 @@ let bricks = {
     totalRow: 5,
     totalCol: 6
 }               //gạch
-let audio = new Audio('audio/funny.mp3')
+let audio = new Audio('audio/BlackPink.mp3')
 let bom = new Audio('audio/hihi.mp3')
 let over = new Audio('audio/over.mp3')
 let winner = new Audio('audio/winner.mp3')
@@ -81,21 +81,61 @@ function drawBricks() {
 }
 
 function updateBall() {
-    ball.x -= ball.dx;
+    ball.x = ball.x - ball.dx
     // console.log('dx', dx)
-    ball.y -= ball.dy;
+    ball.y += ball.dy;
     // console.log('dy',dy)
 }
 
-function move(evt) {
-    if (evt.keyCode === 39) {
-        paddle.x += paddle.speed;
-        console.log('x+', paddle.x)//Cộng trừ tọa độ vẽ của paddle
-    }
-    if (evt.keyCode === 37) {
-        paddle.x -= paddle.speed;
-        console.log('x-', paddle.x)
-    }
+// function move(evt) {
+//     if (evt.keyCode === 39) {
+//         paddle.x += paddle.speed;
+//         console.log('x+', paddle.x)//Cộng trừ tọa độ vẽ của paddle
+//     }
+//     if (evt.keyCode === 37) {
+//         paddle.x -= paddle.speed;
+//         console.log('x-', paddle.x)
+//     }
+//     if (paddle.x < 0) {          // Chặn 2 cạnh di chuyển của thanh ngang
+//         paddle.x = 0
+//         console.log('tọa độ Left x', paddle.x)
+//     }
+//     if (paddle.x > canvas.width - paddle.width) {
+//         paddle.x = canvas.width - paddle.width
+//         console.log('tọa độ Right', paddle.x)
+//     }
+// }
+// window.addEventListener('keydown', move);
+
+function moveLeft() {
+    paddle.x = parseInt(paddle.x) - paddle.speed
+}
+function moveRight() {
+    paddle.x = parseInt(paddle.x) + paddle.speed
+}
+function moveUp() {
+    paddle.y = parseInt(paddle.y) - paddle.speed
+}
+function moveDown() {
+    paddle.y = parseInt(paddle.y) + paddle.speed
+
+}
+
+function move1(abc) {
+  switch (abc.keyCode) {
+      case 37:
+          moveLeft();
+          break;
+      case 39:
+          moveRight();
+          break;
+      case 38:
+          moveUp();
+          break;
+      case 40:
+          moveDown();
+          break;
+  }
     if (paddle.x < 0) {          // Chặn 2 cạnh di chuyển của thanh ngang
         paddle.x = 0
         console.log('tọa độ Left x', paddle.x)
@@ -104,11 +144,14 @@ function move(evt) {
         paddle.x = canvas.width - paddle.width
         console.log('tọa độ Right', paddle.x)
     }
+    if (paddle.y > canvas.height - paddle.height){
+        paddle.y = canvas.height - paddle.height
+    }
+    if (paddle.y <= 300){
+        paddle.y = 300
+    }
 }
-window.addEventListener('keydown', move);
-
-
-
+window.addEventListener('keydown', move1)
 
 function vaChamKhungCanvas() {
     if (ball.x < ball.radius || ball.x + ball.radius > canvas.width) {
@@ -124,7 +167,8 @@ function vaChamKhungCanvas() {
 }
 
 function vaChamThanhNgang() {
-    if (ball.x + ball.radius >= paddle.x && ball.x + ball.radius <= paddle.x + paddle.width && ball.y + ball.radius >= canvas.height - paddle.height) {
+    if (ball.x + ball.radius >= paddle.x && ball.x + ball.radius <= paddle.x + paddle.width && ball.y + ball.radius >= canvas.height - (canvas.height- paddle.y)
+        && ball.y+ ball.radius <= paddle.y + paddle.height) {
         ball.dy = -ball.dy
     }
 }
@@ -169,45 +213,31 @@ function start() {
 
 function gameOver1() {
     audio.pause();
-    over.play()
+    over.play();
     let img = document.getElementById('loser');
-    ctx.drawImage(img,0,0)
-    // ctx.beginPath();
-    // ctx.fillStyle = 'black'
-    // ctx.fillRect(0, 0, canvas.width, canvas.height)
-    // ctx.fillStyle = 'white'
-    // ctx.font = "50px Blazed";
-    // ctx.fillText('Game Over!', canvas.width / 15, canvas.height / 4);
-    // ctx.closePath();
-
+    ctx.drawImage(img, 0, 0)
 }
 
 function youWin() {
     winner.play()
     audio.pause();
     let img1 = document.getElementById('winner');
-    ctx.drawImage(img1,0,0)
-    // ctx.beginPath()
-    // ctx.fillStyle = 'Green'
-    // ctx.fillRect(0, 0, canvas.width, canvas.height)
-    // ctx.fillStyle = 'white'
-    // ctx.font = "80px Arial";
-    // ctx.fillText("YOU WIN!!", canvas.width / 15, canvas.height / 4);
+    ctx.drawImage(img1, 0, 0)
 }
 
 function point() {
-    if (Point === MaxPoint){
+    if (Point === MaxPoint) {
         ctx.fillStyle = 'white'
         ctx.font = '25px Arial'
-        ctx.fillText('YOU WIN ',10,20)
+        ctx.fillText('YOU WIN ', canvas.width - 120, 50)
     } else {
         ctx.fillStyle = 'white'
         ctx.font = '15px Arial'
-        ctx.fillText('Point: ',10,20)
+        ctx.fillText('Point: ', canvas.width - 80, 20)
         ctx.beginPath()
         ctx.fillStyle = 'orange'
         ctx.font = '20px Arial'
-        ctx.fillText(Point,55,22)
+        ctx.fillText(Point, canvas.width - 30, 22)
     }
 
 }
@@ -216,10 +246,23 @@ function reLoad() {
     window.location.reload();
 }
 
+function linePaddle() {
+    ctx.strokeStyle = 'white'
+    ctx.moveTo(0,300);
+    ctx.lineTo(canvas.width,300);
+    ctx.lineWidth = 3;
+    ctx.stroke();
+}
+
+// function tatNhac() {
+//     audio.stop();
+// }
+
 function main() {
+    audio.play()
     if (gameOver) {
-        audio.play()
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        linePaddle()
         drawBall();
         drawPaddle();
         drawBricks()
