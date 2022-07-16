@@ -81,7 +81,7 @@ function drawBricks() {
 }
 
 function updateBall() {
-    ball.x = ball.x - ball.dx
+    ball.x -=ball.dx
     // console.log('dx', dx)
     ball.y += ball.dy;
     // console.log('dy',dy)
