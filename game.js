@@ -4,8 +4,8 @@ let count = 0;
 let ball = {
     x: Math.floor(Math.random() * 200) + 100,
     y: Math.floor(Math.random() * 100) + 200,
-    dx:3,
-    dy:4,
+    dx:2,
+    dy:2,
     radius: 8
 }               //khai báo kích thước tọa độ bóng
 
@@ -33,7 +33,7 @@ let audio = new Audio('audio/funny.mp3')
 let bom = new Audio('audio/hihi.mp3')
 let over = new Audio('audio/over.mp3')
 let winner = new Audio('audio/winner.mp3')
-let audio2 = new Audio('audio/audio2.mp3')
+let audio2 = new Audio('audio/vacham.mp3')
 let img = document.getElementById('loser');
 let img1 = document.getElementById('winner');
 let img2 = document.getElementById('point')
@@ -150,6 +150,11 @@ function move1(abc) {
       case 40:
           moveDown();
           break;
+      case 13:
+          reLoad()
+          break;
+      case 32:
+          main()
   }
     if (paddle.x < 0) {          // Chặn di chuyển của thanh ngang
         paddle.x = 0
@@ -197,7 +202,7 @@ function vaChamThanhNgang() {
 function vaChamGach() {
     bricksArray.forEach(function (a) {
         if (a.isBreak) {
-            if (ball.x >= a.x && ball.x <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
+            if (ball.x + ball.radius >= a.x && ball.x + ball.radius <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
                 ball.y - ball.radius <= a.y + bricks.height) {
                 ball.dy = -ball.dy;
                 a.isBreak = false;
