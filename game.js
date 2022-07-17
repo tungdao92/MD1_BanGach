@@ -191,9 +191,7 @@ function vaChamThanhNgang() {
     if (ball.x + ball.radius > paddle.x && ball.x + ball.radius < paddle.x + paddle.width && ball.y + ball.radius > paddle.y
         && ball.y+ ball.radius < paddle.y + paddle.height) {
         ball.dy = - ball.dy
-
         bom.play();
-        count = count + 0.1
         console.log('count:   ',count)
 
     }
@@ -207,6 +205,7 @@ function vaChamGach() {
                 ball.dy = -ball.dy;
                 a.isBreak = false;
                 Point += 1;
+                count = count + 0.1
                 audio2.play()
                 console.log('diem======>', Point)
                 ball.dx = ball.dx + count;
