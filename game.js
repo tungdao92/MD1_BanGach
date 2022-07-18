@@ -5,7 +5,7 @@ let ball = {
     x: Math.floor(Math.random() * 200) + 100,
     y: Math.floor(Math.random() * 100) + 200,
     dx:2,
-    dy:2,
+    dy:3,
     radius: 8
 }               //khai báo kích thước tọa độ bóng
 
