@@ -29,18 +29,18 @@ let bricks = {
     totalRow: 5,
     totalCol: 6
 }               //gạch
-let audio = new Audio('audio/funny.mp3')
-let bom = new Audio('audio/hihi.mp3')
-let over = new Audio('audio/over.mp3')
-let winner = new Audio('audio/winner.mp3')
-let audio2 = new Audio('audio/vacham.mp3')
+let audio = new Audio('audio/funny.mp3');
+let bom = new Audio('audio/hihi.mp3');
+let over = new Audio('audio/over.mp3');
+let winner = new Audio('audio/winner.mp3');
+let audio2 = new Audio('audio/vacham.mp3');
 let img = document.getElementById('loser');
 let img1 = document.getElementById('winner');
-let img2 = document.getElementById('point')
+let img2 = document.getElementById('point');
 let gameOver = true;
 let GameWin = true;
 let Point = 0;
-let MaxPoint = bricks.totalCol * bricks.totalRow
+let MaxPoint = bricks.totalCol * bricks.totalRow;
 let begin = true;
 let bricksArray = [];     //Array gạch
 
@@ -57,9 +57,9 @@ for (let i = 0; i < bricks.totalRow; i++) {
 function drawBricks() {
     bricksArray.forEach(function (a) {
         if (a.isBreak) {
-            ctx.beginPath()
+            ctx.beginPath();
             ctx.fillStyle = '#ff6b02'
-            ctx.fillRect(a.x, a.y, bricks.width, bricks.height)
+            ctx.fillRect(a.x, a.y, bricks.width, bricks.height);
             ctx.fill();
             ctx.closePath();
         }
@@ -68,7 +68,7 @@ function drawBricks() {
 
 function drawPaddle() {
     ctx.beginPath()
-    ctx.fillStyle = '#fd001e';
+    ctx.fillStyle = '#fd001e'
     ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height)
     ctx.strokeStyle = 'white'
     ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height)
@@ -80,7 +80,7 @@ function drawBall() {
     ctx.fillStyle = '#faf7fa'
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.strokeStyle = 'red';
+    ctx.strokeStyle = 'red'
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.closePath()
@@ -90,15 +90,15 @@ function linePaddle() {
     ctx.strokeStyle = 'white'
     ctx.moveTo(0,300);
     ctx.lineTo(canvas.width,300);
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 3
     ctx.stroke();
 }
 
 
 function moveBall() {
-    ball.x -=ball.dx;
+    ball.x -=ball.dx
     // console.log('dx', dx)
-    ball.y += ball.dy;
+    ball.y += ball.dy
     // console.log('dy',dy)
 }
 
@@ -139,16 +139,16 @@ function moveDown() {
 function move1(abc) {
   switch (abc.keyCode) {
       case 37:
-          moveLeft();
+          moveLeft()
           break;
       case 39:
-          moveRight();
+          moveRight()
           break;
       case 38:
-          moveUp();
+          moveUp()
           break;
       case 40:
-          moveDown();
+          moveDown()
           break;
       case 13:
           reLoad()
@@ -168,7 +168,7 @@ function move1(abc) {
         paddle.y = canvas.height - paddle.height
     }
     if (paddle.y <= 300){
-        paddle.y = 300
+        paddle.y = 300;
     }
 } // Di chuyển thanh đỡ
 
@@ -177,7 +177,7 @@ window.addEventListener('keydown', move1)
 function vaChamKhungCanvas() {
 
     if (ball.x < ball.radius || ball.x + ball.radius > canvas.width) {
-        ball.dx = -ball.dx;
+        ball.dx = -ball.dx
     }
     if (ball.y < ball.radius) {
         ball.dy = -ball.dy
@@ -202,16 +202,16 @@ function vaChamGach() {
         if (a.isBreak) {
             if (ball.x + ball.radius >= a.x && ball.x + ball.radius <= a.x + bricks.width && ball.y + ball.radius >= a.y &&
                 ball.y - ball.radius <= a.y + bricks.height) {
-                ball.dy = -ball.dy;
+                ball.dy = -ball.dy
                 a.isBreak = false;
                 Point ++;
                 count = count + 0.1
-                audio2.play()
+                audio2.play();
                 console.log('diem======>', Point)
                 console.log('count ===========>',count)
-                // ball.dx = ball.dx + count;
-                ball.dy = ball.dy + count *1.5;
-                ball.radius = ball.radius + count;
+                ball.dx = ball.dx + count * 0.5
+                ball.dy = ball.dy + count * 1.5
+                ball.radius = ball.radius + count
                 // document.getElementById('point').innerHTML = Point
                 if (Point === MaxPoint) {
                     // document.getElementById('point').innerHTML = 'You Win!!'
@@ -243,26 +243,26 @@ function start() {
 function gameOver1() {
     audio.pause();
     over.play();
-    ctx.drawImage(img, 0, 0)
+    ctx.drawImage(img, 0, 0);
 }
 
 function youWin() {
-    winner.play()
+    winner.play();
     audio.pause();
-    ctx.drawImage(img1, 0, 0)
+    ctx.drawImage(img1, 0, 0);
 }
 
 function point() {
     if (Point === MaxPoint) {
         ctx.fillStyle = 'white'
         ctx.font = '25px Arial'
-        ctx.fillText('YOU WIN ', canvas.width - 120, 30)
+        ctx.fillText('YOU WIN ', canvas.width - 120, 30);
     } else {
-        ctx.drawImage(img2,30,0)
-        ctx.beginPath()
+        ctx.drawImage(img2,30,0);
+        ctx.beginPath();
         ctx.fillStyle = 'orange'
         ctx.font = '25px Arial'
-        ctx.fillText(Point, canvas.width - 68, 27)
+        ctx.fillText(Point, canvas.width - 68, 27);
     }
 
 }
@@ -280,7 +280,7 @@ function reLoad() {
 
 
 function main() {
-    audio.play()
+    audio.play();
     if (gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         linePaddle()
