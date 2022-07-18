@@ -156,7 +156,7 @@ function move1(abc) {
       case 32:
           main()
   }
-    if (paddle.x < 0) {          // Chặn di chuyển của thanh ngang
+    if (paddle.x < 0) {          // Chặn di chuyển của thanh đỡ
         paddle.x = 0
         console.log('tọa độ Left x', paddle.x)
     }
@@ -208,7 +208,8 @@ function vaChamGach() {
                 count = count + 0.1
                 audio2.play()
                 console.log('diem======>', Point)
-                ball.dx = ball.dx + count;
+                console.log('count ===========>',count)
+                // ball.dx = ball.dx + count;
                 ball.dy = ball.dy + count *1.5;
                 ball.radius = ball.radius + count;
                 // document.getElementById('point').innerHTML = Point
@@ -232,8 +233,6 @@ function vaChamGach() {
 //     updateBall();
 // },50)
 function start() {
-    // let img3 = document.getElementById('start');
-    // ctx.drawImage(img3,0,0)
     ctx.beginPath()
     ctx.font = "50px Arial";
     ctx.fillStyle = 'white';
