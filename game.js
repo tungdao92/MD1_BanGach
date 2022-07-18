@@ -204,7 +204,7 @@ function vaChamGach() {
                 ball.y - ball.radius <= a.y + bricks.height) {
                 ball.dy = -ball.dy;
                 a.isBreak = false;
-                Point += 1;
+                Point ++;
                 count = count + 0.1
                 audio2.play()
                 console.log('diem======>', Point)
