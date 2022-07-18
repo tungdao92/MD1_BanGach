@@ -123,16 +123,16 @@ function moveBall() {
 // window.addEventListener('keydown', move);
 
 function moveLeft() {
-    paddle.x = parseInt(paddle.x) - paddle.speed
+    paddle.x = paddle.x - paddle.speed
 }
 function moveRight() {
-    paddle.x = parseInt(paddle.x) + paddle.speed
+    paddle.x = paddle.x + paddle.speed
 }
 function moveUp() {
-    paddle.y = parseInt(paddle.y) - paddle.speedy
+    paddle.y = paddle.y - paddle.speedy
 }
 function moveDown() {
-    paddle.y = parseInt(paddle.y) + paddle.speedy
+    paddle.y = paddle.y + paddle.speedy
 
 }
 
