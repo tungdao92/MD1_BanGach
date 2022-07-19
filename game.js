@@ -11,7 +11,7 @@ let ball = {
 
 
 let paddle = {
-    width: 600,
+    width: 100,
     height: 20,
     x: Math.floor(Math.random() * (canvas.width - 100)),
     y: Math.floor(Math.random()*200)+500,
@@ -154,12 +154,8 @@ function move1(abc) {
       case 13:
           reLoad()
           break;
-  }
-  if (!gameOver){
-      if (abc.keyCode === 32){
+      case 32:
           main()
-      }
-
   }
     if (paddle.x < 0) {          // Chặn di chuyển của thanh đỡ
         paddle.x = 0
