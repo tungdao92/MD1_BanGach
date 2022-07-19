@@ -209,7 +209,7 @@ function vaChamGach() {
                 audio2.play();
                 console.log('diem======>', Point)
                 console.log('count ===========>',count)
-                ball.dx = ball.dx + count * 0.5
+                // ball.dx = ball.dx + count
                 ball.dy = ball.dy + count * 1.5
                 ball.radius = ball.radius + count
                 // document.getElementById('point').innerHTML = Point
