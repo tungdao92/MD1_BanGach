@@ -11,7 +11,7 @@ let ball = {
 
 
 let paddle = {
-    width: 100,
+    width: 600,
     height: 20,
     x: Math.floor(Math.random() * (canvas.width - 100)),
     y: Math.floor(Math.random()*200)+500,
@@ -28,7 +28,8 @@ let bricks = {
     height: 7,
     totalRow: 5,
     totalCol: 6
-}               //gạch
+}               //Khai báo gạch
+
 let audio = new Audio('audio/funny.mp3');
 let bom = new Audio('audio/hihi.mp3');
 let over = new Audio('audio/over.mp3');
@@ -52,7 +53,7 @@ for (let i = 0; i < bricks.totalRow; i++) {
             isBreak: true
         })
     }
-}        // vẽ mảng gạch
+}        // push gạch vào mảng
 
 function drawBricks() {
     bricksArray.forEach(function (a) {
@@ -64,7 +65,7 @@ function drawBricks() {
             ctx.closePath();
         }
     })
-}
+}   // Vẽ gạch trên canvas
 
 function drawPaddle() {
     ctx.beginPath()
@@ -73,7 +74,7 @@ function drawPaddle() {
     ctx.strokeStyle = 'white'
     ctx.strokeRect(paddle.x, paddle.y, paddle.width, paddle.height)
 
-}
+}  //Vẽ thanh đỡ
 
 function drawBall() {
     ctx.beginPath();
@@ -84,7 +85,7 @@ function drawBall() {
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.closePath()
-}
+}   // Vẽ bóng
 
 function linePaddle() {
     ctx.strokeStyle = 'white'
@@ -100,7 +101,7 @@ function moveBall() {
     // console.log('dx', dx)
     ball.y += ball.dy
     // console.log('dy',dy)
-}
+}    // Di chuyển của bóng
 
 // function move(evt) {
 //     if (evt.keyCode === 39) {
@@ -153,8 +154,12 @@ function move1(abc) {
       case 13:
           reLoad()
           break;
-      case 32:
+  }
+  if (!gameOver){
+      if (abc.keyCode === 32){
           main()
+      }
+
   }
     if (paddle.x < 0) {          // Chặn di chuyển của thanh đỡ
         paddle.x = 0
